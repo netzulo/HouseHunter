@@ -1,0 +1,39 @@
+{
+  "bot": {
+    "log_output_file": "logs/",
+    "log_name": "house_hunter",
+    "log_level": "INFO",
+    "mode": "remote",
+    "browser": "chrome",
+    "options": { "headless": true },
+    "url_hub": "http://ntz-qa.tk:11000/wd/hub",
+    "drivers_path": "../qadrivers",
+    "drivers_names": []
+  },
+  "apps": [
+    {
+      "data": {
+        "by" : "css selector",
+        "user": "-@gmail.com",
+        "pass": "-",
+        "email_src": "- Bot <-@gmail.com>",
+        "email_dst": "- <-@gmail.com>" 
+      },
+      "name": "idealista",
+      "pages": [
+        {
+          "name": "alquiler_ventilla",
+          "url": "https://www.idealista.com/buscar/alquiler-viviendas/madrid-madrid/con-precio-hasta_1000,metros-cuadrados-mas-de_60,de-dos-dormitorios,de-tres-dormitorios,de-cuatro-cinco-habitaciones-o-mas,amueblado_amueblados,exterior/ventilla/?ordenado-por=fecha-publicacion-desc",
+          "locator": "css selector",
+          "go_url": true,
+          "wait_url": 0,
+          "maximize": false,
+          "controls": [
+            { "name": "flat_containers", "selector": ".items-container .item", "instance": "ControlGroup", "on_instance_group": true },
+            { "name": "error_ddos", "selector": "div.content p:nth-child(1)", "instance": "ControlBase", "on_instance_search": false, "on_instance_load": false}
+          ]
+        }
+      ]
+    }
+  ]
+}
