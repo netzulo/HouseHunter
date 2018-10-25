@@ -63,6 +63,8 @@ EMAIL_SRC = IDEALISTA["data"]["email_src"]
 EMAIL_DST = IDEALISTA["data"]["email_dst"]
 
 
+bot = None
+
 try:
     curr_date = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     results = []

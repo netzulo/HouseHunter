@@ -4,7 +4,10 @@ Just another comparator scrapper based on Selenium to avoid website restrictions
 
 ### Prerrequisites
 
-- 1. ```pip install qacode```
+- 1. Create new virtual environment to ensure it's working : ```mkvirtualenv -p $(which python3) househunter```
+- 2. Install dependencies : ```pip install qacode```
+- 3. Copy and configure your settings : ```cp settings.example.json settings.json``` *(you will need and SMTP server or Gmail account ready to send emails)*
+- 4. Execute bot : ```python idealista.py```
 
 ### Start
 
