@@ -23,7 +23,7 @@
       "pages": [
         {
           "name": "alquiler_tetuan",
-          "url": "https://www.idealista.com/buscar/alquiler-viviendas/con-precio-hasta_850,precio-desde_300,pisos,de-un-dormitorio,de-dos-dormitorios,de-tres-dormitorios,de-cuatro-cinco-habitaciones-o-mas,amueblado_amueblados/tetuan/?ordenado-por=precio-asc",
+          "url": "https://www.idealista.com/buscar/alquiler-viviendas/madrid-madrid/con-precio-hasta_650,precio-desde_300,pisos,de-un-dormitorio,de-dos-dormitorios,un-bano,dos-banos,tres-banos-o-mas,amueblado_amueblados/tetuan/?ordenado-por=precio-asc",
           "locator": "css selector",
           "go_url": true,
           "wait_url": 0,

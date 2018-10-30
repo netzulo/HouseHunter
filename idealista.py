@@ -78,6 +78,7 @@ def main():
             for flat_container in flats:
                 # title
                 _title = flat_container.find_element(BY, ".item-info-container>a")
+                bot.navigation.execute_js("arguments[0].scrollIntoView();", _title)
                 title_href = _title.get_attribute("href")
                 title = _title.text
                 # price
@@ -88,7 +89,10 @@ def main():
                 for detail in detail_elements:
                     details += detail.text
                 # contact
-                contact = flat_container.find_element(BY, ".item-toolbar-contact a span").text
+                try:
+                    contact = flat_container.find_element(BY, ".item-toolbar-contact a span").text
+                except:
+                    contact = "FAIL at obtain CONTACT for this flat"
                 # Parse
                 result = {
                     "price": price,
