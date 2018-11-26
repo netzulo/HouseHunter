@@ -55,12 +55,17 @@ EMAIL_TEMPLATE_ROW = """
     </tr>
 """
 
-IDEALISTA = SETTINGS["apps"][0]
-BY = IDEALISTA["data"]["by"]
-USER = IDEALISTA["data"]["user"]
-PASS = IDEALISTA["data"]["pass"]
-EMAIL_SRC = IDEALISTA["data"]["email_src"]
-EMAILS_DST = IDEALISTA["data"]["emails_dst"]
+APP_CONFIG = SETTINGS["apps"][0]
+PAGE_CONFIG = APP_CONFIG["pages"][0]
+IDEALISTA = SETTINGS["data"]
+BY = IDEALISTA["by"]
+USER = IDEALISTA["user"]
+PASS = IDEALISTA["pass"]
+URLS = IDEALISTA["urls"]
+SMTP_HOST = IDEALISTA["smtp_host"]
+SMTP_PORT = IDEALISTA["smtp_port"]
+EMAIL_SRC = IDEALISTA["email_src"]
+EMAILS_DST = IDEALISTA["emails_dst"]
 
 def main():
     bot = None
@@ -69,8 +74,12 @@ def main():
         results = []
         # START
         bot = BotBase(**SETTINGS)
-        for page_config in IDEALISTA["pages"]:
+        for url in URLS:
+            page_config = PAGE_CONFIG.copy()
+            page_config.update({"url": url})
+            import pdb; pdb.set_trace()
             page = PageBase(bot, **page_config)
+            import pdb; pdb.set_trace()
             # flats found : .i
             # tems-container .item 
             flats = page.flat_containers.elements
@@ -132,15 +141,15 @@ def main():
                 email.add_header('Content-Type','text/html')
                 email.set_payload(email_html)
                 bot.log.info("EMAIL: added HTML content...")
-                bot.log.info("GMAIL: connecting...")
-                server = smtplib.SMTP('smtp.gmail.com', 587)
+                bot.log.info("SMTP: connecting...")
+                server = smtplib.SMTP(SMTP_HOST, SMTP_PORT)
                 server.ehlo()
                 server.starttls()
                 server.login(USER, PASS)
-                bot.log.info("GMAIL: connected!")
-                bot.log.info("GMAIL: send an email")
+                bot.log.info("SMTP: connected!")
+                bot.log.info("SMTP: send an email")
                 server.sendmail(email['From'], email['To'], email.as_string().encode())
-                bot.log.info("GMAIL: email sent!")
+                bot.log.info("SMTP: email sent!")
                 server.close()
             # END, next iteration
             bot.log.info("Hardcoded waiting to avoid idealista think it's DDos Error")
