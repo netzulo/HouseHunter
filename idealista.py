@@ -22,6 +22,7 @@ EMAIL_TEMPLATE = """
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!-- Optional theme -->
+  <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -55,12 +56,17 @@ EMAIL_TEMPLATE_ROW = """
     </tr>
 """
 
-IDEALISTA = SETTINGS["apps"][0]
-BY = IDEALISTA["data"]["by"]
-USER = IDEALISTA["data"]["user"]
-PASS = IDEALISTA["data"]["pass"]
-EMAIL_SRC = IDEALISTA["data"]["email_src"]
-EMAILS_DST = IDEALISTA["data"]["emails_dst"]
+APP_CONFIG = SETTINGS["apps"][0]
+PAGE_CONFIG = APP_CONFIG["pages"][0]
+IDEALISTA = SETTINGS["data"]
+BY = IDEALISTA["by"]
+USER = IDEALISTA["user"]
+PASS = IDEALISTA["pass"]
+URLS = IDEALISTA["urls"]
+SMTP_HOST = IDEALISTA["smtp_host"]
+SMTP_PORT = IDEALISTA["smtp_port"]
+EMAIL_SRC = IDEALISTA["email_src"]
+EMAILS_DST = IDEALISTA["emails_dst"]
 
 def main():
     bot = None
@@ -69,7 +75,9 @@ def main():
         results = []
         # START
         bot = BotBase(**SETTINGS)
-        for page_config in IDEALISTA["pages"]:
+        for url in URLS:
+            page_config = PAGE_CONFIG.copy()
+            page_config.update({"url": url})
             page = PageBase(bot, **page_config)
             # flats found : .i
             # tems-container .item 
@@ -132,15 +140,15 @@ def main():
                 email.add_header('Content-Type','text/html')
                 email.set_payload(email_html)
                 bot.log.info("EMAIL: added HTML content...")
-                bot.log.info("GMAIL: connecting...")
-                server = smtplib.SMTP('smtp.gmail.com', 587)
+                bot.log.info("SMTP: connecting...")
+                server = smtplib.SMTP(SMTP_HOST, SMTP_PORT)
                 server.ehlo()
                 server.starttls()
                 server.login(USER, PASS)
-                bot.log.info("GMAIL: connected!")
-                bot.log.info("GMAIL: send an email")
+                bot.log.info("SMTP: connected!")
+                bot.log.info("SMTP: send an email")
                 server.sendmail(email['From'], email['To'], email.as_string().encode())
-                bot.log.info("GMAIL: email sent!")
+                bot.log.info("SMTP: email sent!")
                 server.close()
             # END, next iteration
             bot.log.info("Hardcoded waiting to avoid idealista think it's DDos Error")
