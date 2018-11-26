@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+  <title>Bot</title>
+  <link href="../gui/themes/default/images/favicon.ico" rel="icon" type="image/gif"/>
+  <!-- Bootstrap Metas -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Reset CSS for Bootstrap+HTML5 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha256-gvEnj2axkqIj4wbYhPjbWV7zttgpzBVEgHub9AAZQD4=" crossorigin="anonymous" />
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="../gui/themes/tmpl-bs/css/bootstrap-theme.min.css">-->
+
+</head> 
+<body id="tl-container" class="container-fluid">
+  <section id="tl-section" class="row">
+    <header id="tl-header" class="col-lg-8 col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1 tl-title tl-box-header">
+      <h1 class="text-center tl-title">
+        Pages
+      </h1>
+    </header>
+    <section class="col-lg-8 col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1 tl-box-footer">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+      {% for page in pages %}
+          <tr>
+            <td>{{ page.id }}</td>
+            <td>{{ page.name }}</td>
+          </tr>
+      {% empty %}
+          <tr>
+            <td colspan="2">Sorry, no pages in this list.</td>
+          </tr>
+      {% endfor %}
+        </tbody>
+      </table>
+    </section>
+</body>
+</html>
